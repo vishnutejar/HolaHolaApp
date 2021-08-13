@@ -1,6 +1,9 @@
-﻿using HolaHolaApp.firebaselogic;
+﻿using HolaHolaApp.apputils;
+using HolaHolaApp.firebaselogic;
 using HolaHolaApp.models;
+using HolaHolaApp.views;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace HolaHolaApp.viewmodels
@@ -120,10 +123,14 @@ namespace HolaHolaApp.viewmodels
                 if (IsUserAdded)
                 {
                     UserMessage("Thanks for signup in HolaHola App,");
+                    Preferences.Set(Constants.IsLogin, true);
+                    Navigation(new HomePage());
 
                 }
                 else {
                     UserMessage("Check your entered infomration");
+                    Preferences.Set(Constants.IsLogin, false);
+
                 }
 
             }

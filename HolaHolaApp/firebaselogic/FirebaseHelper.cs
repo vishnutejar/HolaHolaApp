@@ -24,7 +24,9 @@ namespace HolaHolaApp.firebaselogic
                 new Users
                 {
                     PhoneNumber = item.Object.PhoneNumber,
-                    Password = item.Object.Password
+                    Password = item.Object.Password,
+                    email=item.Object.email,
+                    username=item.Object.username
                 }).ToList();
                 return userlist;
             }

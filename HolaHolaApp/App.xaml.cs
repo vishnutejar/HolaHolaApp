@@ -1,5 +1,7 @@
-﻿using HolaHolaApp.views;
+﻿using HolaHolaApp.apputils;
+using HolaHolaApp.views;
 using System;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -11,7 +13,17 @@ namespace HolaHolaApp
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            var navigationpage = Preferences.Get(Constants.IsLogin, false);
+            if (navigationpage)
+            {
+                MainPage = new NavigationPage(new HomePage());
+
+            }
+            else 
+            {
+                MainPage = new NavigationPage(new LoginPage());
+
+            }
         }
 
         protected override void OnStart()
