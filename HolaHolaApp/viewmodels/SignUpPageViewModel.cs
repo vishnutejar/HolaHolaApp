@@ -124,6 +124,7 @@ namespace HolaHolaApp.viewmodels
                 {
                     UserMessage("Thanks for signup in HolaHola App,");
                     Preferences.Set(Constants.IsLogin, true);
+                    Preferences.Set(Constants.UsersPhoneNumber, userdata.PhoneNumber);
                     Navigation(new HomePage());
 
                 }

@@ -76,6 +76,7 @@ namespace HolaHolaApp.viewmodels
 
                         UserMessage("welcome to Holahola APp");
                         Preferences.Set(Constants.IsLogin,true);
+                        Preferences.Set(Constants.UsersPhoneNumber,users.PhoneNumber);
                         Navigation(new HomePage());
                         
                     }

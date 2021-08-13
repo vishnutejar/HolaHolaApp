@@ -15,6 +15,7 @@ namespace HolaHolaApp.views
         public HomePage()
         {
             InitializeComponent();
+
         }
     }
 }

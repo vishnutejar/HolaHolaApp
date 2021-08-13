@@ -3,10 +3,26 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HolaHolaApp.views.ChatUIPage"
              Title="{Binding UserName}"
+             xmlns:vm="clr-namespace:HolaHolaApp.viewmodels"
              >
+   
     <ContentPage.Content>
-        <StackLayout>
+        <Grid RowDefinitions="*,Auto">
+            <CollectionView Grid.Row="0" ItemsSource="{Binding LstCurrentUsersMSG}">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout>
+                            <Label Text="{Binding Messages}"/>
+                            <Label Text="{Binding MsgDate}"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+            <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
+                <Entry Grid.Column="0" Placeholder="Enter Message..." PlaceholderColor="Gray" TextColor="Black" Text="{Binding EnteredMgs}"/>
+                <Button Grid.Column="1"  Text="Send" Command="{Binding SendCommand}"/>
+            </Grid>
            
-        </StackLayout>
+        </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -1,20 +1,20 @@
-﻿using HolaHolaApp.firebaselogic;
+﻿using HolaHolaApp.apputils;
+using HolaHolaApp.firebaselogic;
 using HolaHolaApp.models;
 using HolaHolaApp.views;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Text;
+using System.Linq;
 using System.Windows.Input;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace HolaHolaApp.viewmodels
 {
-   public class HomePageViewModel:BaseViewModel
+    public class HomePageViewModel : BaseViewModel
     {
 
         public Users _selectionItemvalue { get; set; }
-       public Users selectionItemvalue
+        public Users selectionItemvalue
         {
             get
             {
@@ -30,13 +30,15 @@ namespace HolaHolaApp.viewmodels
         }
 
         ObservableCollection<Users> _LstOfusers;
-       public ObservableCollection<Users> LstOfusers 
+        public ObservableCollection<Users> LstOfusers
         {
-            get {
+            get
+            {
 
                 return _LstOfusers;
             }
-            set {
+            set
+            {
 
                 _LstOfusers = value;
                 PropertyChangedEvent("LstOfusers");
@@ -44,8 +46,9 @@ namespace HolaHolaApp.viewmodels
 
         }
         ICommand InitHomePage { get; set; }
-      public ICommand SelectionChangedCommand { get; set; }
-       public HomePageViewModel() {
+        public ICommand SelectionChangedCommand { get; set; }
+        public HomePageViewModel()
+        {
             InitHomePage = new Command(InitUserData);
             SelectionChangedCommand = new Command(ItemSelectionChanged);
             InitHomePage.Execute(null);
@@ -60,9 +63,14 @@ namespace HolaHolaApp.viewmodels
 
         private async void InitUserData(object obj)
         {
+            var loginUserPhoneNumber = Preferences.Get(Constants.UsersPhoneNumber, "0");
+
             var _lstOfUser = await FirebaseHelper.GetAllUser();
-            List<Users> data = _lstOfUser;
-            LstOfusers = new ObservableCollection<Users>(data);
+
+            var lstofOtherUser = _lstOfUser.Where(predicate: u => u.PhoneNumber != loginUserPhoneNumber).ToList();
+
+            LstOfusers = new ObservableCollection<Users>(lstofOtherUser);
+
         }
     }
 }
