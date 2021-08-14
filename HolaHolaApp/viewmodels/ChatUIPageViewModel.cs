@@ -60,6 +60,7 @@ namespace HolaHolaApp.viewmodels
 
         private async void InitCommandChatUiData(object obj)
         {
+            LstCurrentUsersMSG.Clear();
             var messages =  await FirebaseHelper.GetSelectedUserChats(users.PhoneNumber);
 
             foreach (var msgs in messages)
@@ -81,7 +82,8 @@ namespace HolaHolaApp.viewmodels
                 var msgdata = new MessageCenter
                 {
                     Messages = EnteredMgs,
-                    PhoneNumber= loginUserPhoneNumber
+                    SenderPhoneNumber = loginUserPhoneNumber,
+                    ReceiverPhonumber = users.PhoneNumber
                 };
                 var items = await FirebaseHelper.AddChatData(msgdata);
                 if (items)

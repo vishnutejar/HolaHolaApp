@@ -147,14 +147,16 @@ namespace HolaHolaApp.firebaselogic
         {
             try
             {
+                var loginusermobilenumber = Preferences.Get(Constants.UsersPhoneNumber, "0");
                 var userlist = (await firebase
                 .Child(Constants.Chats)
-                .OnceAsync<MessageCenter>()).Where(user => user.Object.PhoneNumber.Equals(phonenumber)
-                || user.Object.PhoneNumber.Equals(Preferences.Get(Constants.UsersPhoneNumber,"0"))).Select(item =>
+                .OnceAsync<MessageCenter>()).Where(user => user.Object.ReceiverPhonumber.Equals(phonenumber)
+                &&user.Object.SenderPhoneNumber.Equals(loginusermobilenumber)).Select(item =>
                   new MessageCenter
                   {
                       Messages = item.Object.Messages,
-                      PhoneNumber = item.Object.PhoneNumber,
+                      SenderPhoneNumber = item.Object.SenderPhoneNumber,
+                      ReceiverPhonumber= item.Object.ReceiverPhonumber,
                       MsgDate = item.Object.MsgDate
                   }).ToList();
                 return userlist;

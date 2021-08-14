@@ -6,7 +6,8 @@ namespace HolaHolaApp.models
 {
    public class MessageCenter
     {
-        public string PhoneNumber { get; set; }
+        public string ReceiverPhonumber { get; set; }
+        public string SenderPhoneNumber { get; set; }
 
         public string Messages { get; set; }
         public string MsgDate { get; set; }
