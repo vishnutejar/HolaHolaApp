@@ -2,8 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HolaHolaApp.views.HomePage"
-             NavigationPage.HasNavigationBar="False"
+             NavigationPage.HasNavigationBar="True"
              xmlns:vm="clr-namespace:HolaHolaApp.viewmodels">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="LogOut" Command="{Binding LogOutCommand}"></ToolbarItem>
+    </ContentPage.ToolbarItems>
     <ContentPage.BindingContext>
         <vm:HomePageViewModel/>
     </ContentPage.BindingContext>

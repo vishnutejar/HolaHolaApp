@@ -4,6 +4,8 @@ using Android.App;
 using Android.Content.PM;
 using Android.Runtime;
 using Android.OS;
+using Plugin.FirebasePushNotification;
+using Firebase;
 
 namespace HolaHolaApp.Droid
 {
@@ -16,7 +18,11 @@ namespace HolaHolaApp.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            FirebaseApp.InitializeApp(this);
+            FirebasePushNotificationManager.ProcessIntent(this, Intent);
+
             LoadApplication(new App());
+
         }
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {

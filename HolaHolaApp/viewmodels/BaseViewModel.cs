@@ -15,14 +15,14 @@ namespace HolaHolaApp.viewmodels
             var handler = PropertyChanged;
             if (handler != null) {
 
-                handler(this,new PropertyChangedEventArgs(Propertyname));
+                handler(this, new PropertyChangedEventArgs(Propertyname));
             }
         }
 
-        public void UserMessage(string message) 
+        public void UserMessage(string message)
         {
 
-            App.Current.MainPage.DisplayAlert("",message,"OK");
+            App.Current.MainPage.DisplayAlert("", message, "OK");
         }
 
         public void Navigation(Page page) {
@@ -31,6 +31,12 @@ namespace HolaHolaApp.viewmodels
         public void NavigationBack()
         {
             App.Current.MainPage.Navigation.PopAsync();
+        }
+        public async void NavigationRoot()
+        {
+           // App.Current.MainPage.Navigation.PopToRootAsync();
+            await App.Current.MainPage.Navigation.PopToRootAsync();
+
         }
     }
 }

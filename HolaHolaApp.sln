@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolaHolaApp.Android", "Hola
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolaHolaApp.iOS", "HolaHolaApp.iOS\HolaHolaApp.iOS.csproj", "{78B07FFA-4237-44CA-8669-E948F2362E8B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HolaHolaApp", "HolaHolaApp\HolaHolaApp.csproj", "{DF2A82D3-7BF1-4FD6-B69C-AFFB3C6D6415}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HolaHolaApp", "HolaHolaApp\HolaHolaApp.csproj", "{DF2A82D3-7BF1-4FD6-B69C-AFFB3C6D6415}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

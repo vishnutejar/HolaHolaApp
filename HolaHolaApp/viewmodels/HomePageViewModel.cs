@@ -47,12 +47,20 @@ namespace HolaHolaApp.viewmodels
         }
         ICommand InitHomePage { get; set; }
         public ICommand SelectionChangedCommand { get; set; }
+        public ICommand LogOutCommand { get; set; }
         public HomePageViewModel()
         {
             InitHomePage = new Command(InitUserData);
             SelectionChangedCommand = new Command(ItemSelectionChanged);
+            LogOutCommand = new Command(LogOutUser);
             InitHomePage.Execute(null);
 
+        }
+
+        private void LogOutUser(object obj)
+        {
+            Preferences.Clear();
+            NavigationRoot();
         }
 
         private void ItemSelectionChanged(object obj)

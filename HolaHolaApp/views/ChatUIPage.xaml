@@ -12,6 +12,7 @@
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <StackLayout>
+                            <Label Text="{Binding PhoneNumber}"></Label>
                             <Label Text="{Binding Messages}"/>
                             <Label Text="{Binding MsgDate}"/>
                         </StackLayout>

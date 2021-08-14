@@ -1,17 +1,19 @@
 ﻿using Firebase.Database;
 using Firebase.Database.Query;
+using HolaHolaApp.apputils;
 using HolaHolaApp.models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Xamarin.Essentials;
 
 namespace HolaHolaApp.firebaselogic
 {
     public class FirebaseHelper
     {
-        public static FirebaseClient firebase = new FirebaseClient("https://holaholaapp-32d37-default-rtdb.firebaseio.com/");
+        public static FirebaseClient firebase = new FirebaseClient(Constants.FireBaseURL);
 
         //Read All    
         public static async Task<List<Users>> GetAllUser()
@@ -19,14 +21,14 @@ namespace HolaHolaApp.firebaselogic
             try
             {
                 var userlist = (await firebase
-                .Child("Users")
+                .Child(Constants.Users)
                 .OnceAsync<Users>()).Select(item =>
                 new Users
                 {
                     PhoneNumber = item.Object.PhoneNumber,
                     Password = item.Object.Password,
-                    email=item.Object.email,
-                    username=item.Object.username
+                    email = item.Object.email,
+                    username = item.Object.username
                 }).ToList();
                 return userlist;
             }
@@ -44,7 +46,7 @@ namespace HolaHolaApp.firebaselogic
             {
                 var allUsers = await GetAllUser();
                 await firebase
-                .Child("Users")
+                .Child(Constants.Users)
                 .OnceAsync<Users>();
                 return allUsers.Where(a => a.PhoneNumber == phnumber).FirstOrDefault();
             }
@@ -62,7 +64,7 @@ namespace HolaHolaApp.firebaselogic
 
 
                 await firebase
-                .Child("Users")
+                .Child(Constants.Users)
                 .PostAsync(new Users()
                 {
                     PhoneNumber = users.PhoneNumber,
@@ -85,10 +87,10 @@ namespace HolaHolaApp.firebaselogic
 
 
                 var toUpdateUser = (await firebase
-                .Child("Users")
+                .Child(Constants.Users)
                 .OnceAsync<Users>()).Where(a => a.Object.PhoneNumber == Phnumber).FirstOrDefault();
                 await firebase
-                .Child("Users")
+                .Child(Constants.Users)
                 .Child(toUpdateUser.Key)
                 .PutAsync(new Users()
                 {
@@ -112,9 +114,9 @@ namespace HolaHolaApp.firebaselogic
 
 
                 var toDeletePerson = (await firebase
-                .Child("Users")
+                .Child(Constants.Users)
                 .OnceAsync<Users>()).Where(a => a.Object.PhoneNumber == phnum).FirstOrDefault();
-                await firebase.Child("Users").Child(toDeletePerson.Key).DeleteAsync();
+                await firebase.Child(Constants.Users).Child(toDeletePerson.Key).DeleteAsync();
                 return true;
             }
             catch (Exception e)
@@ -123,5 +125,48 @@ namespace HolaHolaApp.firebaselogic
                 return false;
             }
         }
+
+        //insertChatData
+        public static async Task<bool> AddChatData(MessageCenter messageCenter)
+        {
+            try
+            {
+
+                await firebase
+                .Child(Constants.Chats)
+                .PostAsync(messageCenter);
+                return true;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Error:{e}");
+                return false;
+            }
+        }
+        public static async Task<List<MessageCenter>> GetSelectedUserChats(string phonenumber)
+        {
+            try
+            {
+                var userlist = (await firebase
+                .Child(Constants.Chats)
+                .OnceAsync<MessageCenter>()).Where(user => user.Object.PhoneNumber.Equals(phonenumber)
+                || user.Object.PhoneNumber.Equals(Preferences.Get(Constants.UsersPhoneNumber,"0"))).Select(item =>
+                  new MessageCenter
+                  {
+                      Messages = item.Object.Messages,
+                      PhoneNumber = item.Object.PhoneNumber,
+                      MsgDate = item.Object.MsgDate
+                  }).ToList();
+                return userlist;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine($"Error:{e}");
+                return null;
+            }
+        }
+
+
+
     }
 }
