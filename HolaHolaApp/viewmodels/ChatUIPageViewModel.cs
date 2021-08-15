@@ -83,7 +83,8 @@ namespace HolaHolaApp.viewmodels
                 {
                     Messages = EnteredMgs,
                     SenderPhoneNumber = loginUserPhoneNumber,
-                    ReceiverPhonumber = users.PhoneNumber
+                    ReceiverPhonumber = users.PhoneNumber,
+                   
                 };
                 var items = await FirebaseHelper.AddChatData(msgdata);
                 if (items)

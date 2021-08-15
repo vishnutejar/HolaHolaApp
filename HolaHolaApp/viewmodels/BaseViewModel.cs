@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HolaHolaApp.views;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
@@ -35,8 +36,7 @@ namespace HolaHolaApp.viewmodels
         public async void NavigationRoot()
         {
            // App.Current.MainPage.Navigation.PopToRootAsync();
-            await App.Current.MainPage.Navigation.PopToRootAsync();
-
+             App.Current.MainPage= new NavigationPage(new LoginPage());
         }
     }
 }

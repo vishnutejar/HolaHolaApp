@@ -145,20 +145,31 @@ namespace HolaHolaApp.firebaselogic
         }
         public static async Task<List<MessageCenter>> GetSelectedUserChats(string phonenumber)
         {
+            var loginuserPhNum = Preferences.Get(Constants.UsersPhoneNumber,"0");
+            var selectedUserPhNum = phonenumber;
+
             try
             {
-                var loginusermobilenumber = Preferences.Get(Constants.UsersPhoneNumber, "0");
                 var userlist = (await firebase
                 .Child(Constants.Chats)
-                .OnceAsync<MessageCenter>()).Where(user => user.Object.ReceiverPhonumber.Equals(phonenumber)
-                &&user.Object.SenderPhoneNumber.Equals(loginusermobilenumber)).Select(item =>
-                  new MessageCenter
-                  {
-                      Messages = item.Object.Messages,
-                      SenderPhoneNumber = item.Object.SenderPhoneNumber,
-                      ReceiverPhonumber= item.Object.ReceiverPhonumber,
-                      MsgDate = item.Object.MsgDate
-                  }).ToList();
+                .OnceAsync<MessageCenter>()).Where(
+                    user1=>user1.Object.ReceiverPhonumber.Equals(selectedUserPhNum)
+                    &&
+                    user1.Object.SenderPhoneNumber.Equals(loginuserPhNum)
+                    ||
+                    user1.Object.ReceiverPhonumber.Equals(loginuserPhNum)
+                    &&
+                    user1.Object.SenderPhoneNumber.Equals(selectedUserPhNum)
+
+                    ).Select(item =>
+                new MessageCenter
+                {
+                    SenderPhoneNumber = item.Object.SenderPhoneNumber,
+                    Messages = item.Object.Messages,
+                    MsgDate = item.Object.MsgDate,
+                    ReceiverPhonumber = item.Object.ReceiverPhonumber,
+                   
+                }).ToList();
                 return userlist;
             }
             catch (Exception e)
