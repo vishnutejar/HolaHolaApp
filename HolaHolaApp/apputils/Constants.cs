@@ -12,5 +12,6 @@ namespace HolaHolaApp.apputils
         public static string UsersPhoneNumber= "UserPhoneNumber";
         public static string Chats= "chats";
         public static string Users= "Users";
+        public static string Fcmtocken = "Fcmtocken";
     }
 }

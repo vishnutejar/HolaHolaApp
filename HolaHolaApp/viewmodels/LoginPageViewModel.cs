@@ -1,6 +1,5 @@
 ﻿using HolaHolaApp.apputils;
 using HolaHolaApp.firebaselogic;
-using HolaHolaApp.models;
 using HolaHolaApp.views;
 using System.Windows.Input;
 using Xamarin.Essentials;
@@ -65,7 +64,8 @@ namespace HolaHolaApp.viewmodels
 
                 UserMessage("Enter Password");
             }
-            else {
+            else
+            {
 
                 var users = await FirebaseHelper.GetUser(PhoneNumber);
 
@@ -74,11 +74,10 @@ namespace HolaHolaApp.viewmodels
                     if (users.PhoneNumber.Equals(PhoneNumber) && users.Password.Equals(Password))
                     {
 
-                        UserMessage("welcome to Holahola APp");
-                        Preferences.Set(Constants.IsLogin,true);
-                        Preferences.Set(Constants.UsersPhoneNumber,users.PhoneNumber);
+                        Preferences.Set(Constants.IsLogin, true);
+                        Preferences.Set(Constants.UsersPhoneNumber, users.PhoneNumber);
                         Navigation(new HomePage());
-                        
+
                     }
                     else
                     {
@@ -87,7 +86,8 @@ namespace HolaHolaApp.viewmodels
                         Preferences.Set(Constants.IsLogin, false);
                     }
                 }
-                else {
+                else
+                {
                     UserMessage("User Not Found Kindly signup!!");
                     Navigation(new SignUpPage());
                     Preferences.Set(Constants.IsLogin, false);

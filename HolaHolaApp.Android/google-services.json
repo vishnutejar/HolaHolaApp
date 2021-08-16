@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "838385658887",
-    "project_id": "tactical11",
-    "storage_bucket": "tactical11.appspot.com"
+    "project_number": "390025657406",
+    "firebase_url": "https://holaholaapp-32d37-default-rtdb.firebaseio.com",
+    "project_id": "holaholaapp-32d37",
+    "storage_bucket": "holaholaapp-32d37.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:838385658887:android:973f14144a84024ef7cea2",
+        "mobilesdk_app_id": "1:390025657406:android:1416848c8a2f06fe6b256f",
         "android_client_info": {
-          "package_name": "com.tactical.app"
+          "package_name": "com.holaholaapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "838385658887-o722vuu05bt7u39i9eu3l89qlp81idj0.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.tactical.app",
-            "certificate_hash": "31b9b697c3280526e4a8244a9d27b60bb1017340"
-          }
-        },
-        {
-          "client_id": "838385658887-qfet81ooopctb0a4psg8nq0q6uu5q585.apps.googleusercontent.com",
+          "client_id": "390025657406-9j1rjk1h461jvtjrurp9356i18rvq6vb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyAx2DWwR5JfM8LkeSBO5Sfs-18wvKxI50Q"
+          "current_key": "AIzaSyBoWaCcg42CkjQcxliCLNvQHs54taKXjDY"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "838385658887-qfet81ooopctb0a4psg8nq0q6uu5q585.apps.googleusercontent.com",
+              "client_id": "390025657406-9j1rjk1h461jvtjrurp9356i18rvq6vb.apps.googleusercontent.com",
               "client_type": 3
             }
           ]

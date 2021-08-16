@@ -2,6 +2,7 @@
 using HolaHolaApp.firebaselogic;
 using HolaHolaApp.models;
 using HolaHolaApp.views;
+using Plugin.FirebasePushNotification;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -112,12 +113,24 @@ namespace HolaHolaApp.viewmodels
             }
             else
             {
+                //CrossFirebasePushNotification.Current.OnTokenRefresh += (s, p) =>
+                //{
+                //    System.Diagnostics.Debug.WriteLine($"TOKEN : {p.Token}");
+                //    App.Current.Properties["Fcmtocken"] = p.Token ?? "";
+                //    App.Current.SavePropertiesAsync();
+
+                //    Preferences.Set(Constants.Fcmtocken, p.Token);
+                //};
+
+                Preferences.Set(Constants.Fcmtocken, CrossFirebasePushNotification.Current.Token);
+
                 var userdata = new Users
                 {
                     PhoneNumber = Phonenumber,
                     email = Email,
                     Password = Password,
-                    username = UserName
+                    username = UserName,
+                    FcmToken= CrossFirebasePushNotification.Current.Token
                 };
                 bool IsUserAdded= await FirebaseHelper.AddUser(userdata);
                 if (IsUserAdded)
@@ -125,6 +138,7 @@ namespace HolaHolaApp.viewmodels
                     UserMessage("Thanks for signup in HolaHola App,");
                     Preferences.Set(Constants.IsLogin, true);
                     Preferences.Set(Constants.UsersPhoneNumber, userdata.PhoneNumber);
+                   
                     Navigation(new HomePage());
 
                 }

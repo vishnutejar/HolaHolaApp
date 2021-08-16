@@ -1,9 +1,12 @@
 ﻿using HolaHolaApp.apputils;
 using HolaHolaApp.firebaselogic;
 using HolaHolaApp.models;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Net.Http;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Xamarin.Essentials;
 using Xamarin.Forms;
@@ -92,10 +95,72 @@ namespace HolaHolaApp.viewmodels
                     LstCurrentUsersMSG.Add(msgdata);
                 }
                 EnteredMgs = string.Empty;
+
+
+
+                try
+                {
+                    var FCMTockenValue = users.FcmToken;
+                    FCMBody body = new FCMBody();
+                    FCMNotification notification = new FCMNotification();
+                    notification.title = users.username;
+                    notification.body = msgdata.Messages;
+                    FCMData data = new FCMData();
+                    data.key1 = users.username;
+                    data.key2 = msgdata.ReceiverPhonumber;
+                    data.key3 = msgdata.SenderPhoneNumber;
+                    data.key4 = msgdata.MsgDate;
+                    data.key4 = msgdata.Messages;
+                    body.to =  FCMTockenValue;
+                    body.notification = notification;
+                    body.data = data;
+                    var isSuccessCall = SendNotification(body).Result;
+                    if (isSuccessCall)
+                    {
+                        //  App.C DisplayAlert("Alart", "Notifications Send Successfully", "Ok");
+                    }
+                    else
+                    {
+                        // DisplayAlert("Alart", "Notifications Send Failed", "Ok");
+                    }
+                }
+                catch (Exception ex)
+                {
+                }
             }
 
         }
-
+        public async Task<bool> SendNotification(FCMBody fcmBody)
+        {
+            try
+            {
+                var httpContent = JsonConvert.SerializeObject(fcmBody);
+                var client = new HttpClient();
+                var authorization = string.Format("key={0}", "AAAAWs9XPD4:APA91bFJYlBxztZolo7_OVlit8cX4lofnyvniO8JsM6Ix0fE30eqSzPW9NHsAweychu_cDXxHkwbwj-yotOOwPkWLpfFD_zaCx1DHeZR3_IFqgvtabZ2QuH-NWxzJIwXgCnqhTAG4bBw");
+                client.DefaultRequestHeaders.TryAddWithoutValidation("Authorization", authorization);
+                var stringContent = new StringContent(httpContent);
+                stringContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/json");
+                string uri = "https://fcm.googleapis.com/fcm/send";
+                var response = await client.PostAsync(uri, stringContent).ConfigureAwait(false);
+                var result = response.Content.ReadAsStringAsync();
+                if (response.IsSuccessStatusCode)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (TaskCanceledException ex)
+            {
+                return false;
+            }
+            catch (Exception ex)
+            {
+                return false;
+            }
+        }
         public string _usrname { get; set; }
         public string UserName
         {
@@ -110,5 +175,7 @@ namespace HolaHolaApp.viewmodels
                 PropertyChangedEvent("UserName");
             }
         }
+
+
     }
 }

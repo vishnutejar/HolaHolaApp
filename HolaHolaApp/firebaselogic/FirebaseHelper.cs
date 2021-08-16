@@ -25,6 +25,7 @@ namespace HolaHolaApp.firebaselogic
                 .OnceAsync<Users>()).Select(item =>
                 new Users
                 {
+                    FcmToken=item.Object.FcmToken,
                     PhoneNumber = item.Object.PhoneNumber,
                     Password = item.Object.Password,
                     email = item.Object.email,
@@ -65,13 +66,7 @@ namespace HolaHolaApp.firebaselogic
 
                 await firebase
                 .Child(Constants.Users)
-                .PostAsync(new Users()
-                {
-                    PhoneNumber = users.PhoneNumber,
-                    Password = users.Password,
-                    email = users.email,
-                    username = users.username
-                });
+                .PostAsync(users);
                 return true;
             }
             catch (Exception e)
